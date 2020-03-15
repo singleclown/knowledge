@@ -20,6 +20,7 @@
     1. [滚动条](#滚动条)
     1. [`@font-face`](#font-face)
     1. [`text-align: justify;`](#text-align-justify)
+    1. [媒体查询](#媒体查询)
 1. [HTML + CSS](#html--css)
 
     1. [禁用`<a>`的鼠标、键盘事件](#禁用a的鼠标键盘事件)
@@ -671,6 +672,25 @@
 3. `text-align: justify-all;`：和`justify`一致，且最后一行也是文字向两侧对齐。
 
 >不推荐中文的文章用这个属性值。建议用默认或者`text-align: start;`。
+
+### 媒体查询
+>参考：[MDN：使用媒体查询](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)。
+
+1. CSS样式中`@media`、`@import`
+2. HTML标签中`<style>`、`<link>`、`<source>`等的`media`属性
+3. JS中`window.matchMedia`（返回`MediaQueryList`对象），`MediaQueryList`对象的`change`事件和`matches`等属性
+
+    ><details>
+    ><summary>e.g.</summary>
+    >
+    >```javascript
+    >var mql = window.matchMedia('(prefers-color-scheme: dark)') // 深色方案
+    >
+    >mql.addEventListener('change', function () {
+    >  console.log(this.matches, this)
+    >})
+    >```
+    ></details>
 
 ---
 ## HTML + CSS
