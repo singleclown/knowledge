@@ -5,6 +5,7 @@
 
     1. [CSS选择器](#css选择器)
     1. [CSS继承](#css继承)
+    1. [CSS盒模型](#css盒模型)
     1. [层叠上下文（stacking context）](#层叠上下文stacking-context)
     1. [几个类似的换行属性](#几个类似的换行属性)
     1. [`table-layout`](#table-layout)
@@ -222,6 +223,27 @@
     5. `all: inherit/initial/unset/revert`
 
         将该元素所有属性（除了 ~~`unicode-bidi`~~、~~`direction`~~）重置为：`inherit/initial/unset/revert`。
+
+### CSS盒模型
+1. 每个元素都被表示为一个矩形的盒子，盒子有四个边：
+
+    外边距边（margin）、边框边（border）、内填充边（padding）、内容边（content）。
+2. `box-sizing`值：
+
+    >以宽度为例。
+
+    1. `content-box`（默认）
+
+        布局所占宽度 = width + padding左右 + border左右
+    2. `border-box`
+
+        布局所占宽度 = width = content + padding左右 + border左右
+    3. ~~`padding-box`~~
+
+        （废弃）
+3. [margin合并](https://github.com/realgeoffrey/knowledge/blob/master/网站前端/HTML+CSS学习笔记/README.md#margin合并)
+
+>ie低版本盒模型比较特殊。
 
 ### 层叠上下文（stacking context）
 >参考：[张鑫旭：深入理解CSS中的层叠上下文和层叠顺序](http://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)。
