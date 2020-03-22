@@ -6,13 +6,13 @@
     1. [CSS选择器](#css选择器)
     1. [CSS继承](#css继承)
     1. [CSS盒模型](#css盒模型)
+    1. [`margin`合并](#margin合并)
+    1. [BFC（Block Formatting Context）块级格式上下文](#bfcblock-formatting-context块级格式上下文)
     1. [层叠上下文（stacking context）](#层叠上下文stacking-context)
     1. [几个类似的换行属性](#几个类似的换行属性)
     1. [`table-layout`](#table-layout)
     1. [块级元素的`width`](#块级元素的width)
     1. [使元素强制表现为`block`的CSS设置](#使元素强制表现为block的css设置)
-    1. [`margin`合并](#margin合并)
-    1. [BFC（Block Formatting Context）块级格式上下文](#bfcblock-formatting-context块级格式上下文)
     1. [CSS的小数、百分比](#css的小数百分比)
     1. [`em`、`%`](#em)
     1. [`line-height`](#line-height)
@@ -245,6 +245,36 @@
 
 >ie低版本盒模型比较特殊。
 
+### `margin`合并
+1. W3C定义：在CSS中，两个或多个毗邻（父子元素或兄弟元素）的普通流中的块元素垂直方向上的margin会发生叠加。这种方式形成的外边距即可称为外边距叠加（collapsed margin）。
+
+    1. 毗邻：是指没有被**非空内容**、**padding**、**border**或**clear**分隔开。
+    2. 普通流：除了`float: left/right`、`positon: absolute/fixed`之外的内容，父级是`flex`的节点不是普通流。
+2. 产生独立的BFC结构可避免margin合并。
+
+>ie6、7触发[haslayout](https://github.com/realgeoffrey/knowledge/blob/master/网站前端/兼容至ie6/README.md#haslayout)会影响margin合并的发生。
+
+### BFC（Block Formatting Context）块级格式上下文
+
+- <details>
+
+    <summary>W3C定义</summary>
+
+    1. 浮动元素、绝对定位元素、非块级盒子的块级容器（如：`inline-blocks`、`table-cells`、`table-captions`）、`overflow`值不为「visiable」的块级盒子，都会为它们的内容创建新的块级格式化上下文。
+    2. 在一个块级格式化上下文里，盒子从包含块的顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由它们的margin 值所决定的。两个相邻的块级盒子的垂直外边距会发生叠加。
+    3. 在块级格式化上下文中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘（border-left）（对于从右到左的格式来说，则触碰到右边缘），即使存在浮动也是如此，除非这个盒子创建一个新的块级格式化上下文。
+    </details>
+
+1. BFC是一个独立的布局环境，可以理解为一个箱子，箱子里物品的摆放不受外界影响，且每个BFC都遵守同一套布局规则。
+2. 对容器添加以下CSS属性使其成为独立的BFC
+
+    1. `float: left / right;`
+    2. `overflow: hidden / auto / scroll;`
+    3. `display: inline-block / table-cell / table-caption / flex / inline-flex;`
+    4. `position: absolute / fixed;`
+
+>ie6、7不支持BFC，但是有[haslayout](https://github.com/realgeoffrey/knowledge/blob/master/网站前端/兼容至ie6/README.md#haslayout)。
+
 ### 层叠上下文（stacking context）
 >参考：[张鑫旭：深入理解CSS中的层叠上下文和层叠顺序](http://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/)。
 
@@ -408,36 +438,6 @@
 2. `position: absolute/fixed;`
 
 >意味着有以上CSS属性的行内标签可以当做块级标签使用。
-
-### `margin`合并
-1. W3C定义：在CSS中，两个或多个毗邻（父子元素或兄弟元素）的普通流中的块元素垂直方向上的margin会发生叠加。这种方式形成的外边距即可称为外边距叠加（collapsed margin）。
-
-    1. 毗邻：是指没有被**非空内容**、**padding**、**border**或**clear**分隔开。
-    2. 普通流：除了`float: left/right`、`positon: absolute/fixed`之外的内容，父级是`flex`的节点不是普通流。
-2. 产生独立的BFC结构可避免margin合并。
-
->ie6、7触发[haslayout](https://github.com/realgeoffrey/knowledge/blob/master/网站前端/兼容至ie6/README.md#haslayout)会影响margin合并的发生。
-
-### BFC（Block Formatting Context）块级格式上下文
-
-- <details>
-
-    <summary>W3C定义</summary>
-
-    1. 浮动元素、绝对定位元素、非块级盒子的块级容器（如：`inline-blocks`、`table-cells`、`table-captions`）、`overflow`值不为「visiable」的块级盒子，都会为它们的内容创建新的块级格式化上下文。
-    2. 在一个块级格式化上下文里，盒子从包含块的顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由它们的margin 值所决定的。两个相邻的块级盒子的垂直外边距会发生叠加。
-    3. 在块级格式化上下文中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘（border-left）（对于从右到左的格式来说，则触碰到右边缘），即使存在浮动也是如此，除非这个盒子创建一个新的块级格式化上下文。
-    </details>
-
-1. BFC是一个独立的布局环境，可以理解为一个箱子，箱子里物品的摆放不受外界影响，且每个BFC都遵守同一套布局规则。
-2. 对容器添加以下CSS属性使其成为独立的BFC
-
-    1. `float: left / right;`
-    2. `overflow: hidden / auto / scroll;`
-    3. `display: inline-block / table-cell / table-caption / flex / inline-flex;`
-    4. `position: absolute / fixed;`
-
->ie6、7不支持BFC，但是有[haslayout](https://github.com/realgeoffrey/knowledge/blob/master/网站前端/兼容至ie6/README.md#haslayout)。
 
 ### CSS的小数、百分比
 1. 浏览器会把小数以及百分比换算成整数的单位（px）
